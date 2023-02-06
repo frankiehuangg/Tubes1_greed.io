@@ -1,0 +1,10 @@
+Models/PlayerAction.class
+Models/Position.class
+Main.class
+Models/GameObject.class
+Enums/PlayerActions.class
+Models/GameStateDto.class
+Models/GameState.class
+Models/World.class
+Services/BotService.class
+Enums/ObjectTypes.class
