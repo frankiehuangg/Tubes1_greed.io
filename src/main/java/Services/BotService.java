@@ -34,9 +34,18 @@ public class BotService {
     }
 
     public void computeNextPlayerAction(PlayerAction playerAction) {
+
         playerAction.action = PlayerActions.FORWARD;
         playerAction.heading = new Random().nextInt(360);
 
+        // Ini semua objek dalam game (asteroid, dst)
+        // gameState.getGameObjects().forEach(obj -> obj.display());
+
+        // Ini semua player dalam game
+        // gameState.getPlayerGameObjects().forEach(obj -> obj.display());
+
+        // Ini kita
+        bot.display();
         if (!gameState.getGameObjects().isEmpty()) {
             var foodList = gameState.getGameObjects()
                     .stream().filter(item -> item.getGameObjectType() == ObjectTypes.FOOD)
@@ -46,8 +55,11 @@ public class BotService {
 
             playerAction.heading = getHeadingBetween(foodList.get(0));
         }
-
         this.playerAction = playerAction;
+    }
+
+    public void attackMode(){
+
     }
 
     public GameState getGameState() {
