@@ -12,6 +12,7 @@ public class BotService {
     private GameState gameState;
 
     private boolean firedTeleporter;
+    private boolean startafterburner;
     private Integer headingTeleporter;
 
     public BotService() {
@@ -78,6 +79,45 @@ public class BotService {
                 this.playerAction.action = PlayerActions.TELEPORT;
                 firedTeleporter = false;
             }
+        }
+    }
+
+
+    public void escapeMode(){
+        var ESCAPEDISTANCE = 100;
+
+        // Sort Player dari yang terdekat (credits: William)
+        var nearPlayerList = gameState.getPlayerGameObjects()
+                .stream().filter(player -> !player.id.equals(bot.id))
+                .sorted(Comparator
+                        .comparing(player -> getDistanceBetween(bot, player)))
+                .collect(Collectors.toList());
+        if(nearPlayerList.size() == 0){
+            return;
+        }
+        var nearestBot = nearPlayerList.get(0);
+        var distance = getDistanceBetween(bot, nearestBot) - nearestBot.getSize() - bot.getSize();
+        var angle = getHeadingBetween(nearestBot);
+
+        // Kalau ada bot dalam range escape dengan ukuran yang lebih besar
+        if(bot.getSize() > 100 && distance <= ESCAPEDISTANCE && nearestBot.getSize() > bot.getSize()){
+            this.playerAction.heading = angle;
+            System.out.println("Initiate After Burner");
+            nearestBot.display();
+            this.playerAction.action= PlayerActions.STARTAFTERBURNER;
+            this.startafterburner = true;
+            System.out.println(this.playerAction.heading);
+            return;
+        }
+        
+        //Jika sudah aman
+        if((bot.getSize()< 100 || distance > ESCAPEDISTANCE || nearestBot.getSize() <= bot.getSize()) && this.startafterburner){
+            this.playerAction.action= PlayerActions.STOPAFTERBURNER;
+            System.out.println("Turning Off After Burner");
+            this.startafterburner = false;
+            nearestBot.display();
+            System.out.println(this.playerAction.heading);
+            return;
         }
     }
 
