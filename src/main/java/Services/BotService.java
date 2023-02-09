@@ -67,6 +67,8 @@ public class BotService {
         // TODO FUNC: get degree evade obstacle
         if (bot.getSize() > 20) {
             attackMode();
+        }else{
+            escapeMode();
         }
 
         // PUT URGENT ACTIONS HERE
