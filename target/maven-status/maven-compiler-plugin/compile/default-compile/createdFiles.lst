@@ -4,6 +4,7 @@ Main.class
 Models/GameObject.class
 Enums/PlayerActions.class
 Models/GameStateDto.class
+Enums/EffectTypes.class
 Models/GameState.class
 Models/World.class
 Services/BotService.class
