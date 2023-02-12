@@ -292,7 +292,10 @@ public class BotService {
 		// hitung angle
 		var angle = nearestBot.getCurrentHeading();
 
+        var distanceAsteroid = getDistanceBetween(bot, asteroidList.get(0)) - bot.getSize();
+
 		System.out.println(angle);
+
 
         // Kalau ada bot dalam range escape dengan ukuran yang lebih besar
         if (distance <= ESCAPEDISTANCE && nearestBot.getSize() > bot.getSize()){
@@ -314,6 +317,10 @@ public class BotService {
             // System.out.println(this.playerAction.heading);
         //     return;
         // }
+
+        if(distanceAsteroid < distance){
+            this.playerAction.heading = getHeadingBetween(asteroidList.get(0));
+        }
     }
 
     public void attackMode(){
