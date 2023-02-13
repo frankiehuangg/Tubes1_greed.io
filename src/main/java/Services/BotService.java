@@ -22,6 +22,7 @@ public class BotService {
 	public List<GameObject> teleporterList;
 	public List<GameObject> asteroidList;
 	public List<GameObject> gasCloudList;
+    public List<GameObject> wormHoleList;
 
     public BotService() {
         this.playerAction = new PlayerAction();
@@ -83,6 +84,8 @@ public class BotService {
 			.sorted(Comparator
 					.comparing(item -> getDistanceBetween(bot, item)))
 			.collect(Collectors.toList());
+
+        wormHoleList = gameState.getGameObjects().stream().filter(item -> item.getGameObjectType() == ObjectTypes.WORMHOLE).sorted(Comparator.comparing(item -> getDistanceBetween(bot, item))).collect(Collectors.toList());
 
 		// SORT PLAYER DR YG TERDEKET SM KITA
         nearPlayerList = gameState.getPlayerGameObjects()
@@ -209,6 +212,8 @@ public class BotService {
                 // firedTeleporter = false;
             }
         }
+
+
     }
 
 	public void eatMode()
@@ -292,29 +297,54 @@ public class BotService {
 		// hitung angle
 		var angle = nearestBot.getCurrentHeading();
 
+        var distanceAsteroid = getDistanceBetween(bot, asteroidList.get(0)) - bot.getSize() - asteroidList.get(0).getSize();
+
 		System.out.println(angle);
 
         // Kalau ada bot dalam range escape dengan ukuran yang lebih besar
         if (distance <= ESCAPEDISTANCE && nearestBot.getSize() > bot.getSize()){
             this.playerAction.heading = (angle + 45) % 360;
-            // System.out.println("Initiate After Burner");
-            // nearestBot.display();
-            // this.playerAction.action= PlayerActions.STARTAFTERBURNER;
-            // this.startafterburner = true;
-            // System.out.println(this.playerAction.heading);
+            if(bot.getSize() > nearestBot.getSize()*2){
+                System.out.println("Initiate After Burner");
+                this.playerAction.action= PlayerActions.STARTAFTERBURNER;
+                this.startafterburner = true;
+            }else{
+                System.out.println("Turning Off After Burner");
+                this.playerAction.action= PlayerActions.STOPAFTERBURNER;
+                this.startafterburner = false;
+            }
             return;
         }
         
         //Jika sudah aman
-        // if ( distance > ESCAPEDISTANCE || nearestBot.getSize() <= bot.getSize()){
-            // this.playerAction.action= PlayerActions.STOPAFTERBURNER;
-            // System.out.println("Turning Off After Burner");
-            // this.startafterburner = false;
-            // nearestBot.display();
-            // System.out.println(this.playerAction.heading);
-        //     return;
-        // }
+        if ( (distance > ESCAPEDISTANCE || nearestBot.getSize() <= bot.getSize()) && this.startafterburner){
+            System.out.println("Turning Off After Burner");
+            this.playerAction.action= PlayerActions.STOPAFTERBURNER;
+            this.startafterburner = false;
+        }
+
+        if(distanceAsteroid < distance){
+            this.playerAction.heading = getHeadingBetween(asteroidList.get(0));
+            System.out.println("Heading to Asteroid");
+        } 
     }
+
+    // public boolean avoid_validation(int mode){
+    //     if(mode == 1){
+    //         //Eat mode
+    //         if((getDistanceBetween(bot, foodList.get(0)) > getDistanceBetween(bot, gasCloudList.get(0))- bot.getSize() - gasCloudList.get(0).getSize()) || (getDistanceBetween(bot, foodList.get(0)) > getDistanceBetween(bot, wormHoleList.get(0))- bot.getSize() - gasCloudList.get(0).getSize())){
+    //             return true;
+    //         }
+    //     }else if(mode == 2){
+    //         //Attack mode
+    //         var nearestBot = nearPlayerList.get(0);
+    //         var distance = getDistanceBetween(bot, nearestBot) - nearestBot.getSize() - bot.getSize();
+    //         if((distance > getDistanceBetween(bot, gasCloudList.get(0))- bot.getSize() - gasCloudList.get(0).getSize()) || (getDistanceBetween(bot, foodList.get(0)) > getDistanceBetween(bot, wormHoleList.get(0))- bot.getSize() - gasCloudList.get(0).getSize())){
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     public void attackMode(){
         var PURSUEDISTANCE = 175;
