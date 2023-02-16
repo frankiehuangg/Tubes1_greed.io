@@ -13,7 +13,7 @@ public class BotService {
 
     // private boolean firedTeleporter;
     private boolean startafterburner;
-    private Integer headingTeleporter;
+    private Integer headingTeleporter = -1;
 
 	public List<GameObject> foodList;
 	public List<GameObject> superFoodList;
@@ -68,7 +68,7 @@ public class BotService {
 					.comparing(item -> getDistanceBetween(bot, item)))
 			.collect(Collectors.toList());
 		teleporterList = gameState.getGameObjects()
-			.stream().filter(item -> item.getGameObjectType() == ObjectTypes.TELEPORTER)
+			.stream().filter(item -> item.getGameObjectType() == ObjectTypes.TELEPORTER && Math.abs(item.getCurrentHeading() - headingTeleporter) < 2)
 			.sorted(Comparator
 					.comparing(item -> getDistanceBetween(bot, item)))
 			.collect(Collectors.toList());
@@ -96,33 +96,10 @@ public class BotService {
 	}
 
     public void computeNextPlayerAction(PlayerAction playerAction) {
+        //this.heading = 100
+        //this.playerAction = playerActionS;
 
-        //playerAction.action = PlayerActions.FORWARD;
-        // Ini semua objek dalam game (asteroid, dst)
-        // gameState.getGameObjects().forEach(obj -> obj.display());
 
-        // Ini semua player dalam game
-        //  gameState.getPlayerGameObjects().forEach(obj -> obj.display());
-
-        // Ini kita,
-        // bot.display();
-
-        // fungsi cari makanan terdekat
-        //if (!gameState.getGameObjects().isEmpty()) {
-        //    var foodList = gameState.getGameObjects()
-        //            .stream().filter(item -> item.getGameObjectType() == ObjectTypes.FOOD)
-        //            .sorted(Comparator
-        //                    .comparing(item -> getDistanceBetween(bot, item)))
-        //            .collect(Collectors.toList());
-
-        //    playerAction.heading = getHeadingBetween(foodList.get(0));
-        //}
-        //this.playerAction = playerAction;
-
-        // Attack mode ga bisa jalan menghindar
-        // Panggil fungsi attack dulu, kalau dia mau ngelakuin sesuatu
-        // nanti dia overwrite perintah feeding module di atas ^^
-        // TODO FUNC: get degree evade obstacle
 		
 		// Get sorted data
 		getData();
@@ -209,7 +186,7 @@ public class BotService {
             if (shouldDetonate) {
                 System.out.println("teleported!");
                 this.playerAction.action = PlayerActions.TELEPORT;
-                // firedTeleporter = false;
+                this.headingTeleporter = -1;
             }
         }
 
@@ -396,17 +373,8 @@ public class BotService {
     }
 
     public boolean shouldDetonateTeleporter() {
-        // Cari teleporter yang arahnya sama kayak yang kita tembak
-        var myTeleporter = gameState.getGameObjects()
-                .stream().filter(item -> item.getGameObjectType() == ObjectTypes.TELEPORTER && Math.abs(item.getCurrentHeading() - headingTeleporter) < 4)
-                .collect(Collectors.toList());
-
-
-        // Teleporter dah hilang
-        if (myTeleporter.size() == 0) {
-            // firedTeleporter = false;
-        } else {
-            var teleporter = myTeleporter.get(0);
+        if (!teleporterList.isEmpty()) {
+            var teleporter = teleporterList.get(0);
             System.out.println("Found teleporter");
             teleporter.display();
             System.out.println(headingTeleporter);
@@ -457,6 +425,5 @@ public class BotService {
     private int toDegrees(double v) {
         return (int) (v * (180 / Math.PI));
     }
-
 
 }
