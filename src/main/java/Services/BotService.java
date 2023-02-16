@@ -99,18 +99,9 @@ public class BotService {
 			eatMode();
 		}	
 
-        // Check if we have fired a teleporter and should teleport.
-        if (!teleporterList.isEmpty()) {
-            System.out.println("Checking fired teleporter");
-            boolean shouldDetonate = shouldDetonateTeleporter();
-            if (shouldDetonate) {
-                System.out.println("teleported!");
-                this.playerAction.action = PlayerActions.TELEPORT;
-                this.headingTeleporter = -1;
-            }
-        }
 
-
+        // Cek apakah ada aksi urgen yang harus dilakukan di ronde ini.
+        overrideUrgentActions();
     }
 
 	public void eatMode()
@@ -253,6 +244,19 @@ public class BotService {
             this.playerAction.action = PlayerActions.FIRETELEPORT;
             this.playerAction.heading = teleportAngle;
             this.headingTeleporter = teleportAngle;
+        }
+    }
+
+    public void overrideUrgentActions() {
+        // Check if we have fired a teleporter and should teleport.
+        if (!teleporterList.isEmpty()) {
+            System.out.println("Checking fired teleporter");
+            boolean shouldDetonate = shouldDetonateTeleporter();
+            if (shouldDetonate) {
+                System.out.println("teleported!");
+                this.playerAction.action = PlayerActions.TELEPORT;
+                this.headingTeleporter = -1;
+            }
         }
     }
 
