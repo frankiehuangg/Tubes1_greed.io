@@ -63,7 +63,7 @@ public class Main {
         //This is a blocking call
         hubConnection.start().subscribe(() -> {
             while (hubConnection.getConnectionState() == HubConnectionState.CONNECTED) {
-                Thread.sleep(100);
+                Thread.sleep(200);
 
                 GameObject bot = botService.getBot();
                 if (bot == null) {

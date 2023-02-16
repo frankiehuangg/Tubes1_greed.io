@@ -11,7 +11,7 @@ public class BotService {
     private PlayerAction playerAction;
     private GameState gameState;
 
-    // private boolean firedTeleporter;
+    private boolean firedTeleporter;
     private boolean startafterburner;
     private Integer headingTeleporter;
 
@@ -162,7 +162,7 @@ public class BotService {
 				escapeMode();
 			}
 		}
-		else if (botSize >= 100 && closestBotDistance <= 3 * botSize)
+		else if (botSize >= 60)
 		{
 			System.out.print("ATTACK MODE ");
 			attackMode();
@@ -209,7 +209,7 @@ public class BotService {
             if (shouldDetonate) {
                 System.out.println("teleported!");
                 this.playerAction.action = PlayerActions.TELEPORT;
-                // firedTeleporter = false;
+                firedTeleporter = false;
             }
         }
 
@@ -261,7 +261,7 @@ public class BotService {
 		//	double teleporterDistance = getDistanceBetween(bot, nearestTeleporter);
 	
 		// activate shield
-		if (bot.getSize() > 200)
+		if (bot.getSize() > 400)
 		{
 			var nearestBot = nearPlayerList.get(0);
 			int angle = nearestBot.getCurrentHeading();
@@ -329,26 +329,9 @@ public class BotService {
         } 
     }
 
-    // public boolean avoid_validation(int mode){
-    //     if(mode == 1){
-    //         //Eat mode
-    //         if((getDistanceBetween(bot, foodList.get(0)) > getDistanceBetween(bot, gasCloudList.get(0))- bot.getSize() - gasCloudList.get(0).getSize()) || (getDistanceBetween(bot, foodList.get(0)) > getDistanceBetween(bot, wormHoleList.get(0))- bot.getSize() - gasCloudList.get(0).getSize())){
-    //             return true;
-    //         }
-    //     }else if(mode == 2){
-    //         //Attack mode
-    //         var nearestBot = nearPlayerList.get(0);
-    //         var distance = getDistanceBetween(bot, nearestBot) - nearestBot.getSize() - bot.getSize();
-    //         if((distance > getDistanceBetween(bot, gasCloudList.get(0))- bot.getSize() - gasCloudList.get(0).getSize()) || (getDistanceBetween(bot, foodList.get(0)) > getDistanceBetween(bot, wormHoleList.get(0))- bot.getSize() - gasCloudList.get(0).getSize())){
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
     public void attackMode(){
-        var PURSUEDISTANCE = 175;
-        var FIRINGDISTANCE = 250; 
+        var PURSUEDISTANCE = 0.4 * gameState.world.radius;
+        var FIRINGDISTANCE = 0.6 * gameState.world.radius;
 
         if (nearPlayerList.size() == 0) {
             return;
@@ -404,7 +387,7 @@ public class BotService {
 
         // Teleporter dah hilang
         if (myTeleporter.size() == 0) {
-            // firedTeleporter = false;
+            firedTeleporter = false;
         } else {
             var teleporter = myTeleporter.get(0);
             System.out.println("Found teleporter");
