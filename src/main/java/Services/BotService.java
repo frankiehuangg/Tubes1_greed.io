@@ -73,8 +73,8 @@ public class BotService {
 		// System.out.println("MAP SIZE\t: " + mapSize);
 
         // Mode picking logic
-        boolean isDanger = closestBotSize > botSize && closestBotDistance <= 3 * botSize;
-		boolean isStrong = botSize >= 100 && closestBotDistance <= 3 * botSize;
+        boolean isDanger = closestBotSize > botSize && closestBotDistance <= 5 * botSize;
+		boolean isStrong = botSize >= 100 && closestBotDistance <= 10 * botSize;
 
         // Pick MODES
 		if (isDanger)
