@@ -49,8 +49,6 @@ Untuk cara instalasi dapat dilakukan dengan pencarian dalam browser masing dan m
 mvn clean package
 ```
 
-- Apabila menggunakan IntelliJ
-
 2. Run Manually
 - First Terminal, run
 ``` shell
