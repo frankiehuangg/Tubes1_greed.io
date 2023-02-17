@@ -38,6 +38,9 @@ Pada mode defend, pemain akan mengaktifkan SHIELD untuk melindungi pemain dari s
 2. To run
 - Java 18.0.2.1 (min 11)
 - .Net 7.0.102 (Untuk yang selanjutnya dapat mengikuti link yang diberikan ketika menjalankan program.)
+    - Windows
+    - Linux
+    - Mac
 
 Untuk cara instalasi dapat dilakukan dengan pencarian dalam browser masing dan melakukan download dapat berupa zip maupun sdk. Apabila zip dapat ditambahkan bin pathnya ke path environment device.
 
