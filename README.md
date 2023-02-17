@@ -48,6 +48,7 @@ Untuk cara instalasi dapat dilakukan dengan pencarian dalam browser masing dan m
 ```shell
 mvn clean package
 ```
+
 - Apabila menggunakan IntelliJ
 
 2. Run Manually
