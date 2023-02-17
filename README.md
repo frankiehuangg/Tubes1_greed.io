@@ -10,6 +10,7 @@ Pemanfaatan Algoritma Greedy dalam Aplikasi Permainan Galaxio
 * [How To Run](#how-to-run)
 * [Project Structure](#project-structure)
 * [Author](#author)
+* [Link Video](#link-video)
 
 
 ## General Information
@@ -166,3 +167,7 @@ Kelompok -- greed.io
 1. Wilson Tansil -- 13521054
 2. Frankie Huang -- 13521092
 3. William Nixon -- 13521123
+
+
+## Link Video
+Link : https://youtu.be/3FFyWiRmKBQ
