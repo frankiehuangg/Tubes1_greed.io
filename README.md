@@ -45,7 +45,6 @@ Untuk cara instalasi dapat dilakukan dengan pencarian dalam browser masing dan m
 1. Building Program
 <br>
 - Apabila menggunakan maven, pada bagian terminal (recommended ```powershell```), run
-<br>
 ``` shell
 mvn clean package
 ```
