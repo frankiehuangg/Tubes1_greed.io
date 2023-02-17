@@ -43,7 +43,6 @@ Untuk cara instalasi dapat dilakukan dengan pencarian dalam browser masing dan m
 
 ## How To Run
 1. Building Program
-<br>
 - Apabila menggunakan maven, pada bagian terminal (recommended ```powershell```), run
 ``` shell
 mvn clean package
