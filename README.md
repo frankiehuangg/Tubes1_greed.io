@@ -51,6 +51,16 @@ Untuk cara instalasi dapat dilakukan dengan pencarian dalam browser masing dan m
 mvn clean package
 ```
 - Apabila menggunakan IntelliJ
+    - Go to File
+    - Click On Project Structure
+    - Go to Artifact
+    - Click ```+``` at The Top
+    - Choose jar, from modules with dependencies
+    - Choose main class
+    - Accept all the changes and click ```Ok```
+    - Go to Build
+    - Click build artifact
+    - Your jar will be at folder out
 
 2. Run Manually
 - First Terminal, run
@@ -77,6 +87,20 @@ sleep 3
 dotnet ReferenceBot.dll // if you are using jar then u can insert "java -jar path" to the terminal
 ```
 
+3. Using Batch (For Windows)
+- In Terminal, run
+``` shell
+./run.bat
+```
+- Or double click the batch file
+
+4. Using Shell (For Linux)
+- In Terminal, run
+``` shell
+./ run.sh
+```
+- Or double click the shell file
+
 ## Project Structure
 ```bash
 .
@@ -86,6 +110,10 @@ dotnet ReferenceBot.dll // if you are using jar then u can insert "java -jar pat
 ├─── Dockerfile
 │
 ├─── pom.xml
+│
+├─── run.sh
+│
+├─── run.bat
 │
 ├─── target
 │       │
